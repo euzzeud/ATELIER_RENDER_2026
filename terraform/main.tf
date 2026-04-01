@@ -57,7 +57,7 @@ resource "render_web_service" "adminer" {
 }
 
 resource "render_postgres" "db" {
-  name   = "postgres-${var.github_actor}"
+  name   = "postgres-${var.github_actor}-${random_id.suffix.hex}"
   plan   = "free"
   region = "frankfurt"
   version = "18"
