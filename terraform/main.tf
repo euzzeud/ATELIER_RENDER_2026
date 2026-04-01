@@ -56,9 +56,7 @@ resource "render_web_service" "adminer" {
   }
 
   env_vars = {
-  "ADMINER_DEFAULT_SERVER" = {
-    value = render_postgres.db.connection_info.external_connection_string
-  }
+  "ADMINER_DEFAULT_SERVER" = { value = render_postgres.db.connection_info.internal_host }
 
 }
 }
