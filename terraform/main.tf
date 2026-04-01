@@ -39,7 +39,7 @@ resource "render_web_service" "flask_app" {
     }
 
     "DB_CONNECTION_STRING" = {
-      value = render_postgres.db.connection_info.external_connection_string
+      value = render_postgres.db.connection_info.internal_connection_string
     }
   }
 }
@@ -57,7 +57,7 @@ resource "render_web_service" "adminer" {
 }
 
 resource "render_postgres" "db" {
-  name   = "postgres-${var.github_actor}-${random_id.suffix.hex}"
+  name   = "postgres-${var.github_actor}"
   plan   = "free"
   region = "frankfurt"
   version = "18"
@@ -65,10 +65,16 @@ resource "render_postgres" "db" {
 
 resource "render_static_site" "react_frontend" {
   name   = "react-frontend-${var.github_actor}-${random_id.suffix.hex}"
-
   repo_url        = "https://github.com/euzzeud/ATELIER_RENDER_2026"
   branch          = "main"
   root_directory  = "frontend"
   build_command   = "npm run build"
   publish_path    = "build"
+
+  env_vars = {
+    "REACT_APP_API_URL" = {
+      value = render_web_service.flask_app.url
+    }
+  }
 }
+
