@@ -52,4 +52,5 @@ resource "render_postgres" "db" {
   name   = "postgres-${var.github_actor}"
   plan   = "free"
   region = "frankfurt"
+  version = "18"
 }
