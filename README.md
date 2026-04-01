@@ -106,7 +106,6 @@ Vous allez créer un environnement de développement qui proposera aux développ
 **Achitecture cible** est la suivante :  
   
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/b5611e31-78d3-402b-9d36-7589784f1dd7" />
-
 * **Flask** : Créé via Terraform comme **Web Service**
 * **Adminer** : Créé via Terraform comme **Web Service**
 * **React** : A créer directement dans Render via l’interface **New -> Static Site -> Public Git Repository** 
