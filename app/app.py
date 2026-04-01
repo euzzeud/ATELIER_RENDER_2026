@@ -34,7 +34,7 @@ def init_db():
 
 
 init_db()
-
+# d
 
 @app.route("/")
 def home():
