@@ -56,11 +56,9 @@ resource "render_web_service" "adminer" {
   }
 
   env_vars = {
-  "ADMINER_DEFAULT_SERVER"   = render_postgres.db.host
-  "ADMINER_DEFAULT_USERNAME" = render_postgres.db.user
-  "ADMINER_DEFAULT_PASSWORD" = render_postgres.db.password
-  "ADMINER_DEFAULT_DB"       = render_postgres.db.database_name
-}
+  "ADMINER_DEFAULT_SERVER" = {
+    value = render_postgres.db.connection_info.external_connection_string
+  }
 
 }
 
