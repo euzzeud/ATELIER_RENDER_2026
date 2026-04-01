@@ -33,6 +33,10 @@ resource "render_web_service" "flask_app" {
     "ENV" = {
       value = "production"
     }
+
+    "DB_CONNECTION_STRING" = {
+      value = render_postgres.db.connection_string
+    }
   }
 }
 
@@ -53,4 +57,16 @@ resource "render_postgres" "db" {
   plan   = "free"
   region = "frankfurt"
   version = "18"
+}
+
+resource "render_static_site" "react_frontend" {
+  name   = "react-frontend-${var.github_actor}"
+  plan   = "free"
+  region = "frankfurt"
+
+  repo_url        = "https://github.com/euzzeud/ATELIER_RENDER_2026"
+  branch          = "main"
+  root_directory  = "frontend"
+  build_command   = "npm run build"
+  publish_directory = "build"
 }
