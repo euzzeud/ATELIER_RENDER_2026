@@ -61,6 +61,7 @@ resource "render_web_service" "adminer" {
   }
 
 }
+}
 
 resource "render_postgres" "db" {
   name   = "postgres-${var.github_actor}"
