@@ -54,11 +54,6 @@ resource "render_web_service" "adminer" {
       image_url = "adminer"
     }
   }
-
-  env_vars = {
-  "ADMINER_DEFAULT_SERVER" = { value = render_postgres.db.connection_info.internal_host }
-
-}
 }
 
 resource "render_postgres" "db" {
