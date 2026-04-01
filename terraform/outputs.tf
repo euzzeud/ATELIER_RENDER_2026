@@ -19,7 +19,7 @@ output "postgres_name" {
 }
 
 output "postgres_connection_string" {
-  value = render_postgres.db.connection_string
+  value = render_postgres.db.connection_info.external_connection_string
   sensitive = true
 }
 
