@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+resource "random_id" "suffix" {
+  byte_length = 2
+}
+
 provider "render" {
   api_key  = var.render_api_key
   owner_id = var.render_owner_id
@@ -18,7 +22,7 @@ variable "github_actor" {
 }
 
 resource "render_web_service" "flask_app" {
-  name   = "flask-render-iac-${var.github_actor}"
+  name   = "flask-render-iac-${var.github_actor}-${random_id.suffix.hex}"
   plan   = "free"
   region = "frankfurt"
 
@@ -41,7 +45,7 @@ resource "render_web_service" "flask_app" {
 }
 
 resource "render_web_service" "adminer" {
-  name   = "adminer-${var.github_actor}"
+  name   = "adminer-${var.github_actor}-${random_id.suffix.hex}"
   plan   = "free"
   region = "frankfurt"
 
@@ -50,6 +54,14 @@ resource "render_web_service" "adminer" {
       image_url = "adminer"
     }
   }
+
+  env_vars = {
+  "ADMINER_DEFAULT_SERVER"   = render_postgres.db.host
+  "ADMINER_DEFAULT_USERNAME" = render_postgres.db.user
+  "ADMINER_DEFAULT_PASSWORD" = render_postgres.db.password
+  "ADMINER_DEFAULT_DB"       = render_postgres.db.database_name
+}
+
 }
 
 resource "render_postgres" "db" {
@@ -60,7 +72,7 @@ resource "render_postgres" "db" {
 }
 
 resource "render_static_site" "react_frontend" {
-  name   = "react-frontend-${var.github_actor}"
+  name   = "react-frontend-${var.github_actor}-${random_id.suffix.hex}"
 
   repo_url        = "https://github.com/euzzeud/ATELIER_RENDER_2026"
   branch          = "main"
